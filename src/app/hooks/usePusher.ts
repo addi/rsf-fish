@@ -9,7 +9,7 @@ const usePusherBids = (channelName: string) => {
   };
 
   useEffect(() => {
-    var pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY || "", {
+    const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY || "", {
       cluster: "eu",
     });
 

@@ -39,7 +39,7 @@ export default function Auction({ id }: { id: string }) {
   };
 
   const onClick = () => {
-    const highestBid = Math.max(...bids.map((bid) => bid.bid), 0);
+    const highestBid = Math.max(...bids.map((bid) => bid.bid), 1);
     bid(id, highestBid + 1);
   };
 

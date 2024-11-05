@@ -1,4 +1,11 @@
-import { getAuction, getBidsForAuction } from "@/services/auction";
+import {
+  auctionsMaxBid,
+  getAuction,
+  getBidsForAuction,
+} from "@/services/auction";
+
+export const dynamic = "force-dynamic";
+export const fetchCache = "default-no-store";
 
 export async function GET(
   req: Request,
@@ -6,6 +13,14 @@ export async function GET(
 ) {
   const auction = await getAuction(params.id);
   const bids = await getBidsForAuction(params.id);
+  const highestBid = await auctionsMaxBid(params.id);
 
-  return Response.json({ auction, bids });
+  console.log(bids);
+  console.log("highestBid", highestBid);
+
+  if (auction.length === 0) {
+    return Response.json({ error: "Auction not found" }, { status: 404 });
+  }
+
+  return Response.json({ auction: auction[0], bids });
 }

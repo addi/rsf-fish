@@ -1,7 +1,11 @@
+import { SelectBid } from "@/schema";
 import { addBid, auctionsMaxBid, getAuction } from "@/services/auction";
 import Pusher from "pusher";
 
-function pushBid(auctionId: number, bid: number) {
+export const dynamic = "force-dynamic";
+export const fetchCache = "default-no-store";
+
+function pushBid(auctionId: number, bid: SelectBid) {
   const pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID!,
     key: process.env.PUSHER_KEY!,
@@ -41,9 +45,13 @@ export async function POST(
     bid: data.bid,
   };
 
-  const response = await addBid(insertData);
+  const bidData = await addBid(insertData);
 
-  pushBid(auctionId, data.bid);
+  if (bidData.length === 0) {
+    return Response.json({ error: "Failed to add bid" }, { status: 500 });
+  }
 
-  return Response.json(response);
+  pushBid(auctionId, bidData[0]);
+
+  return Response.json(bidData);
 }

@@ -11,7 +11,7 @@ export async function getAuction(id: number) {
 }
 
 export async function getBidsForAuction(auctionId: number) {
-  return db.select().from(bidTable).where(eq(bidTable.id, auctionId));
+  return db.select().from(bidTable).where(eq(bidTable.auctionId, auctionId));
 }
 
 export async function addAuction(data: InsertAuction) {
@@ -19,7 +19,7 @@ export async function addAuction(data: InsertAuction) {
 }
 
 export async function addBid(data: InsertBid) {
-  return db.insert(bidTable).values(data);
+  return db.insert(bidTable).values(data).returning();
 }
 
 export async function auctionsMaxBid(auctionId: number) {

@@ -1,10 +1,11 @@
+import { SelectBid } from "@/schema";
 import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
 const usePusherBids = (channelName: string) => {
-  const [bids, setBids] = useState<Array<number>>([]);
+  const [bids, setBids] = useState<Array<SelectBid>>([]);
 
-  const callback = (data: number) => {
+  const callback = (data: SelectBid) => {
     setBids((prev) => [...prev, data]);
   };
 

@@ -5,10 +5,10 @@ import { addBid, auctionsMaxBid, getAuction } from "@/services/auction";
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
 
-function pushBid(auctionId: number, bid: SelectBid) {
+async function pushBid(auctionId: number, bid: SelectBid) {
   const channelName = pusherChannelName(auctionId);
 
-  pusherPublish(channelName, "bid", bid);
+  await pusherPublish(channelName, "bid", bid);
 }
 
 export async function POST(
@@ -45,7 +45,7 @@ export async function POST(
     return Response.json({ error: "Failed to add bid" }, { status: 500 });
   }
 
-  pushBid(auctionId, bidData[0]);
+  await pushBid(auctionId, bidData[0]);
 
   return Response.json(bidData);
 }

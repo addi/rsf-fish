@@ -13,7 +13,11 @@ export function pusherChannelName(auctionId: number) {
   return enviromentPrefix + "auction_" + auctionId;
 }
 
-export function pusherPublish(channel: string, event: string, data: object) {
+export async function pusherPublish(
+  channel: string,
+  event: string,
+  data: object
+) {
   const pusher = new Pusher({
     appId: process.env.PUSHER_APP_ID!,
     key: process.env.PUSHER_KEY!,
@@ -22,5 +26,5 @@ export function pusherPublish(channel: string, event: string, data: object) {
     useTLS: true,
   });
 
-  pusher.trigger(channel, event, data);
+  await pusher.trigger(channel, event, data);
 }

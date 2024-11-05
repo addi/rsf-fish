@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import usePusherBids from "./hooks/usePusher";
 import styles from "./page.module.css";
 import { SelectAuction } from "@/schema";
 import Link from "next/link";
@@ -30,9 +29,8 @@ export default function Home() {
           <thead>
             <tr>
               <th>ID</th>
-              <th>Date</th>
               <th>Title</th>
-              <th>Current Bid</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
@@ -53,15 +51,6 @@ export default function Home() {
                     key={auction.id}
                     className={styles.auction}
                   >
-                    {new Date(auction.createdAt).toLocaleString("is-IS")}
-                  </Link>
-                </td>
-                <td>
-                  <Link
-                    href={`/auction/${auction.id}`}
-                    key={auction.id}
-                    className={styles.auction}
-                  >
                     {auction.title}
                   </Link>
                 </td>
@@ -71,7 +60,7 @@ export default function Home() {
                     key={auction.id}
                     className={styles.auction}
                   >
-                    0 isk
+                    {new Date(auction.createdAt).toLocaleString("is-IS")}
                   </Link>
                 </td>
               </tr>

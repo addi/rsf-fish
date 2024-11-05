@@ -13,7 +13,6 @@ export default function Auction({ id }: { id: string }) {
   const [fetchBids, setFetchBids] = useState<SelectBid[]>([]);
 
   const bids = useMemo(() => {
-    // remove all the fetchBids from the pusherBids
     const filteredPusherBids = pusherBids.filter((pusherBid) => {
       return !fetchBids.some((fetchBid) => fetchBid.id === pusherBid.id);
     });
@@ -59,7 +58,7 @@ export default function Auction({ id }: { id: string }) {
 
   return (
     <>
-      <h2 className={styles.title}>🐠 Bids</h2>
+      <h2 className={styles.title}>🐠 {auction ? `${auction.title}` : ""}</h2>
       <button className={styles.button} onClick={onClick}>
         Bid
       </button>

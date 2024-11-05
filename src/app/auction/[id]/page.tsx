@@ -8,8 +8,6 @@ export default async function AuctionPage({
 }) {
   const auctionId = (await params).id;
 
-  console.log("Auction ID", auctionId);
-
   return (
     <div className={styles.page}>
       <main className={styles.main}>

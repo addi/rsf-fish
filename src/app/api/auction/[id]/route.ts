@@ -1,3 +1,4 @@
+import { pusherChannelName } from "@/app/misc/pusher";
 import {
   auctionsMaxBid,
   getAuction,
@@ -15,12 +16,11 @@ export async function GET(
   const bids = await getBidsForAuction(params.id);
   const highestBid = await auctionsMaxBid(params.id);
 
-  console.log(bids);
-  console.log("highestBid", highestBid);
-
   if (auction.length === 0) {
     return Response.json({ error: "Auction not found" }, { status: 404 });
   }
+
+  const pusherChannel = pusherChannelName(params.id);
 
   return Response.json({ auction: auction[0], bids });
 }

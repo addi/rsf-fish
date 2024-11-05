@@ -1,20 +1,14 @@
+import { pusherChannelName, pusherPublish } from "@/app/misc/pusher";
 import { SelectBid } from "@/schema";
 import { addBid, auctionsMaxBid, getAuction } from "@/services/auction";
-import Pusher from "pusher";
 
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
 
 function pushBid(auctionId: number, bid: SelectBid) {
-  const pusher = new Pusher({
-    appId: process.env.PUSHER_APP_ID!,
-    key: process.env.PUSHER_KEY!,
-    secret: process.env.PUSHER_SECRET!,
-    cluster: "eu",
-    useTLS: true,
-  });
+  const channelName = pusherChannelName(auctionId);
 
-  pusher.trigger(`auction_${auctionId}`, "bid", bid);
+  pusherPublish(channelName, "bid", bid);
 }
 
 export async function POST(

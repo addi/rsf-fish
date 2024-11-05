@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { auctionTable, bidTable, InsertAuction, InsertBid } from "@/schema";
 
 export async function getAllAuctions() {
-  return db.select().from(auctionTable);
+  return db.select().from(auctionTable).orderBy(desc(auctionTable.id));
 }
 
 export async function getAuction(id: number) {

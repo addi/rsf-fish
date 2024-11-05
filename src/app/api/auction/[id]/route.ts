@@ -14,7 +14,6 @@ export async function GET(
 ) {
   const auction = await getAuction(params.id);
   const bids = await getBidsForAuction(params.id);
-  const highestBid = await auctionsMaxBid(params.id);
 
   if (auction.length === 0) {
     return Response.json({ error: "Auction not found" }, { status: 404 });
@@ -22,5 +21,5 @@ export async function GET(
 
   const pusherChannel = pusherChannelName(params.id);
 
-  return Response.json({ auction: auction[0], bids });
+  return Response.json({ auction: auction[0], bids, pusherChannel });
 }

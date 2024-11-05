@@ -2,7 +2,7 @@ import { SelectBid } from "@/schema";
 import Pusher from "pusher-js";
 import { useEffect, useState } from "react";
 
-const usePusherBids = (channelName: string) => {
+const usePusherBids = (channelName?: string) => {
   const [bids, setBids] = useState<Array<SelectBid>>([]);
 
   const callback = (data: SelectBid) => {
@@ -12,6 +12,10 @@ const usePusherBids = (channelName: string) => {
   };
 
   useEffect(() => {
+    if (!channelName) {
+      return;
+    }
+
     const key = process.env.NEXT_PUBLIC_PUSHER_APP_KEY || "enginn key";
 
     console.log("Connecting to pusher", key);

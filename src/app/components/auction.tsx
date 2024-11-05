@@ -7,7 +7,9 @@ import { SelectAuction, SelectBid } from "@/schema";
 import usePusherBids from "@/app/hooks/usePusher";
 
 export default function Auction({ id }: { id: string }) {
-  const pusherBids = usePusherBids("auction_" + id);
+  const [pusherChannel, setPusherChannel] = useState<string>();
+
+  const pusherBids = usePusherBids(pusherChannel);
 
   const [auction, setAuction] = useState<SelectAuction>();
   const [fetchBids, setFetchBids] = useState<SelectBid[]>([]);
@@ -50,6 +52,7 @@ export default function Auction({ id }: { id: string }) {
 
     setFetchBids(data.bids);
     setAuction(data.auction);
+    setPusherChannel(data.pusherChannel);
   };
 
   useEffect(() => {

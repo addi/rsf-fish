@@ -6,6 +6,8 @@ const usePusherBids = (channelName: string) => {
   const [bids, setBids] = useState<Array<SelectBid>>([]);
 
   const callback = (data: SelectBid) => {
+    console.log("Pusher bid", data);
+
     setBids((prev) => [...prev, data]);
   };
 
@@ -13,6 +15,7 @@ const usePusherBids = (channelName: string) => {
     const key = process.env.NEXT_PUBLIC_PUSHER_APP_KEY || "enginn key";
 
     console.log("Connecting to pusher", key);
+    console.log("Channel name", channelName);
 
     const pusher = new Pusher(process.env.NEXT_PUBLIC_PUSHER_APP_KEY || "", {
       cluster: "eu",

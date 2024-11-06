@@ -27,6 +27,9 @@ const fishTypes = [
 ];
 
 export async function GET(req: Request) {
+  // Here we would check the header to secure the endpoint
+  // Make sure it is a cron job
+
   const randomFish = fishTypes[Math.floor(Math.random() * fishTypes.length)];
 
   const auctionData = { title: randomFish };

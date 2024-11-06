@@ -14,7 +14,7 @@ async function pushBid(auctionId: number, bid: SelectBid) {
   await pusherPublish(channelName, "bid", bid);
 }
 
-export function makeLockId(auctionId: number) {
+function makeLockId(auctionId: number) {
   let enviromentPrefix = "";
 
   if (

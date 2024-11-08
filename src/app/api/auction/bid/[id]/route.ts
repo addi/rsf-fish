@@ -8,7 +8,7 @@ import { addBid, auctionsMaxBid, getAuction } from "@/services/auction";
 export const dynamic = "force-dynamic";
 export const fetchCache = "default-no-store";
 
-async function pushBid(auctionId: number, bid: SelectBid) {
+async function pushBidToWebsocket(auctionId: number, bid: SelectBid) {
   const channelName = pusherChannelName(auctionId);
 
   await pusherPublish(channelName, "bid", bid);
@@ -39,8 +39,6 @@ export async function POST(
     return Response.json({ error: "Auction not found" }, { status: 404 });
   }
 
-  const data = await req.json();
-
   const lockId = makeLockId(auctionId);
 
   const lock = new Lock({
@@ -54,6 +52,8 @@ export async function POST(
   });
 
   if (await lock.acquire()) {
+    const data = await req.json();
+
     const highestBid = await auctionsMaxBid(auctionId);
 
     if (highestBid.length > 0 && highestBid[0].bid >= data.bid) {
@@ -78,7 +78,7 @@ export async function POST(
       return Response.json({ error: "Failed to add bid" }, { status: 500 });
     }
 
-    await pushBid(auctionId, bidData[0]);
+    await pushBidToWebsocket(auctionId, bidData[0]);
 
     await lock.release();
 

@@ -27,6 +27,23 @@ function makeLockId(auctionId: number) {
   return enviromentPrefix + "auction_" + auctionId;
 }
 
+const fishEmojis: string[] = [
+  "🐟", // Fish
+  "🐠", // Tropical Fish
+  "🐡", // Blowfish
+  "🦈", // Shark
+  "🐬", // Dolphin
+  "🐳", // Spouting Whale
+  "🐋", // Whale
+  "🦑", // Squid
+  "🐙", // Octopus
+  "🦐", // Shrimp
+  "🦞", // Lobster
+  "🦀", // Crab
+  "🦭", // Seal
+  "🌊", // Water Wave
+];
+
 export async function POST(
   req: Request,
   { params }: { params: { id: number } }
@@ -65,9 +82,13 @@ export async function POST(
       );
     }
 
+    const randomEmoji =
+      fishEmojis[Math.floor(Math.random() * fishEmojis.length)];
+
     const insertData = {
       auctionId: auctionId,
       bid: data.bid,
+      emoji: randomEmoji,
     };
 
     const bidData = await addBid(insertData);

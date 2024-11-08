@@ -77,7 +77,10 @@ export default function Auction({ id }: { id: string }) {
         <tbody>
           {bids.map((bid) => (
             <tr key={bid.id}>
-              <td>{bid.id}</td>
+              <td>
+                {bid.emoji}
+                {bid.id}
+              </td>
               <td>{new Date(bid.createdAt).toLocaleString("is-IS")}</td>
               <td>{bid.bid} isk</td>
             </tr>

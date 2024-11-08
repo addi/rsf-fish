@@ -10,6 +10,7 @@ export const auctionTable = pgTable("auction", {
 export const bidTable = pgTable("bid", {
   id: serial("id").primaryKey(),
   bid: integer("bid").notNull(),
+  emoji: text("emoji"),
   auctionId: integer("auction_id")
     .notNull()
     .references(() => auctionTable.id, { onDelete: "cascade" }),
